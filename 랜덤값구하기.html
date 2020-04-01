@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        #container{
+            width: 700px;
+            height: 500px;
+            background: yellowgreen;
+            margin: auto;
+            position: relative;
+            
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/lib.js"></script>
+    <script>
+        var container;
+        var r = Math.random();
+        var imgbandi;
+        var a = 0.1;
+        var targetX=0;
+        var targetY=0;
+        // 랜덤값 구하기!! 객체
+        // 자바스크립트의 내장객체중  수학(Math)객체를 표현한 객체를 
+        // 사용하면 랜덤값을 구할 수 잇따.
+        window.addEventListener("load", function(){
+            container = document.getElementById("container");
+            oncreateImage();
+            onbandi();
+
+            setInterval(move, 250);
+        })
+        
+        function oncreateImage(){
+            var img = document.createElement("img");
+            container = document.getElementById("container");
+            img.src = "../images/bandi/forest.jpg"
+            img.style.left = 0 + "px";
+            img.style.top = 0 + "Px";
+
+            img.style.position = "absolute";
+            img.style.width = 700 + "px";
+            img.style.height = 500 + "px";
+            container.appendChild(img);
+        }
+
+        function onbandi(){
+            container = document.getElementById("container");
+            imgbandi = document.createElement("img");
+            imgbandi.src = "../images/bandi/bandi.jpg";
+            imgbandi.style.left = this.targetX + "px";
+            imgbandi.style.top = this.targetY+ "px";
+
+            imgbandi.style.position = "absolute";
+            imgbandi.style.width = 30 + "px";
+            imgbandi.style.height = 30 + "px";
+            
+            
+            imgbandi.addEventListener("load", function(){
+                targetX = parseInt((r*10)*70);
+                targetY = parseInt((r*10)*50);
+            })
+            container.appendChild(imgbandi);
+        }
+
+        function move(){
+            imgbandi.style.left =parseFloat(imgbandi.style.left) + a*(targetX - parseFloat(imgbandi.style.left)) +"px"; 
+            imgbandi.style.top = parseFloat(imgbandi.style.top) + a*(targetY - parseFloat(imgbandi.style.top)) +"px";
+        }
+
+    </script>
+</head>
+<body>
+    <div id="container" >
+    </div>
+</body>
+</html>

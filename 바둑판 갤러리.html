@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #container{
+            width: 415px; /* 이미지간 gap도 생각한 결과*/    /*4번*/
+            height: 415px;
+            background: yellowgreen;
+            margin: auto;
+            position: relative;
+        }
+    </style>
+    <script>
+        var container;    //10번  이중포문에 있었던 컨테이너를 전역변수로 만들고 이벤트 리스너에서 얻어오자
+        var box; // 
+        var a=0.1 // 남은거리의 몇%를 갈지를 결정, 이 변수의 값이 클수록
+                        // 많은 거리를 한번에 가므로 투박해진다.
+        var targetX=0;
+        var targetY=0;
+
+        //프로그램이 가동되자마자 즉 onLoad 시 이미지 생성!!
+        addEventListener("load", function(){ //window.~~~ 인데 window 생갹한거임.  1번
+            // alert("문서로드했어?");    // 이거 막고 create~ 붙이기   만들기 3번
+            container = document.getElementById("container");
+            createImage();
+            createRect();
+
+            setInterval("move()", 25);
+        })
+
+        function createImage(){   // 만들기 2번
+
+             // containerdiv 안쪽에 자식요소로 이미지를 생성하여 부착!! 
+            // 이미지당 너비 100 높이 100  이미지간 간격 5;
+
+            for(var i =1; i<=4; i++){ //층 결정                              //이중 포문으로 7번    단일포문에서 이중포문으로 변환
+                for(var j=1; j<=4; j++){ //호수 결정
+                var img = document.createElement("img");  // 5번  컨테이너에 자식 붙이고 이미지 넓이 지정까지
+                
+                img.src = "../images/background/"+i*j+".jpg"    // 이미지 번호 정할때 이미지 변수 따로 뺴서
+                img.style.width = 100 + "px";                           // var a=1;  만들어주고 a++; 이렇게 가도 됨
+                img.style.height = 100 + "px";
+
+                //지금도 보기 좋지만, 포지션 값이 할당되어야, 포인터가    //7번  포지션을 스타일에다가 안하는 이유는
+                // 목표지점 (targetX, targetY)을 향해 올 수 있다.          // 스타일에서 적용이 안됨. 무조건 밑에서. 
+                img.style.position = "absolute";                                // 자식이 포지션을 가지고 있으면 부모도 가지고 있어야 한다.
+                img.style.left = (j-1)*105 +"px";   //여기서 105 대신 100과 gap을 
+                img.style.top = (i-1)*105 +"px";
+
+                // 11번 이미지에 이벤트 핸들러 연결!!!
+                img.addEventListener ("click", function(){
+                    //alert("저의 x,y 좌표는" + this.style.left + this.style.top);  // 문자를 숫자로 --> parseint()
+
+                    // 12번 추출한 위치값을 사각형box의 위치오ㅏ 일치시키자
+                    // 일치시키기위해서 rect()에 정의되어 있는 box를 전역변수로 옮기자
+                    // parseint 를 변수로 만들면????   안되는거 같은데??  되는거 같은데??
+                    // var intleft = parseint(this.style.left);
+                    // var inttop = parseint(this.style.top);
+                    
+
+                    //15번 box.style.left  box.style.top  를 타겟으로 바꾸자
+                    targetX = parseInt(this.style.left);
+                    targetY = parseInt(this.style.top);
+                })
+
+
+                container.appendChild(img);   // 컨테이에 img라는 자식을 붙이겠다.
+            
+        }
+    }
+            // containerdiv 안쪽에 자식요소로 이미지를 생성하여 부착!! 
+            // 이미지당 너비 100 높이 100  이미지간 간격 5;
+            // for(var i=1; i<=16; i++){      // for문 6번
+            //     var img = document.createElement("img");  // 5번  컨테이너에 자식 붙이고 이미지 넓이 지정까지
+            //     var container = document.getElementById("container");
+            //     img.src = "../images/background/1.jpg"
+            //     img.style.width = 100 + "px";
+            //     img.style.height = 100 + "px";
+
+            //     //지금도 보기 좋지만, 포지션 값이 할당되어야, 포인터가    //7번  포지션을 스타일에다가 안하는 이유는
+            //     // 목표지점 (targetX, targetY)을 향해 올 수 있다.          // 스타일에서 적용이 안됨. 무조건 밑에서. 
+            //     img.style.position = "absolute";                                // 자식이 포지션을 가지고 있으면 부모도 가지고 있어야 한다.
+            //     img.style.left = 0 +"px";
+            //     img.style.top = 0 +"px";
+
+
+            //     container.appendChild(img);   // 컨테이에 img라는 자식을 붙이겠다.
+            // }
+        }
+
+        function createRect(){  // 8번
+            box = document.createElement("div");
+            //이미지 위에 얹혀져야 하므로 중첩이 가능한 위치속성
+            box.style.position = "absolute";
+            box.style.left = 0 + "px";
+            box.style.top = 0 + "px";
+
+            //10번   div 가 있지만 보이지 않는다 표시하자
+            box.style.width=90 + "px"
+            box.style.height=90 + "px"
+            // box.style.border=5 + "px"
+            box.style.border="5px groove red"  // border에 많이 있다. solid, double, groove etc...
+
+            //배경색상 처리 16번
+            box.style.background="yellow"
+            box.style.opacity = 0.6;
+
+
+            //컨테이너에 부착하자 9번  근데 컨터에너도 얻어와야 하니까 전역변수로 뺴자
+            container.appendChild(box);
+
+        }
+
+        // box의 색상을 변경하는 함수  17번
+        function setBg(bg){
+            box.style.background=bg;
+        }
+
+        // 18번 속도조절하는 함수
+        function setA(v){
+            this.a = v;
+        }
+
+        //13번 한번에 도달하게 하지 말고, 목표 지점에 대해 일부만 도달하도록 처리
+        function move(){
+            // 나의 위치는  = 현재 나의 위치 - 비율계수*(목표지점-나의위치)
+            // 계수 전역변수로 선언하자
+            // 14번 targetX 와 targetY를 설정하자
+            box.style.left = parseFloat(box.style.left) + a*(targetX - parseFloat(box.style.left)) +"px";
+            box.style.top = parseFloat(box.style.top) + a*(targetY - parseFloat(box.style.top)) +"px";
+
+        }
+
+    </script>
+</head>
+<body> <!--15번-->
+    <select onchange="setBg(this.value)">
+        <option>색상선택</option>
+        <option value="yellowgreen">yellowgreen</option>
+        <option value="blue">blue</option>
+        <option value="gray">gray</option>
+        <option value="green">green</option>
+    </select>
+    <select onchange="setA(this.value)">
+        <option>부드러운 정도</option>
+        <option value="0.05">0.05</option>
+        <option value="0.1">0.1</option>
+        <option value="0.3">0.3</option>
+        <option value="0.6">0.6</option>
+    </select>
+    <div id="container"></div>
+</body>
+
+
+</html>

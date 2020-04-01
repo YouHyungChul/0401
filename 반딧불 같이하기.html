@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        #container{
+            width: 1300px;
+            height: 864px;
+            background: yellowgreen;
+            margin: auto;
+            position: relative;
+            background: url(../images/bandi/forest1.jpg);
+            
+        }
+
+    </style>
+    <script src="../js/lib.js"></script>
+    <script>
+        var container;
+        var bandi;
+        var a=0.1
+        var targetX = 500;
+        var targetY=200;
+        window.addEventListener("load", function(){
+            init();
+            createImage();
+
+            setInterval("move()", 10);
+            setInterval("setTarget()", 1900); //원하는 시간 간격으로 랜덤값을 던져주자.....
+        });
+        function init(){
+            container = document.getElementById("container");
+        }
+        function createImage(){
+             bandi = document.createElement("img");
+             bandi.src = "../images/bandi/bandi.jpg"
+             bandi.style.position = "absolute";
+             bandi.style.left = 100 + "px";
+             bandi.style.top = 100 + "px";
+             bandi.style.width = 70 + "px";
+
+             container.appendChild(bandi);
+
+        }
+        function setTarget(){
+            targetX = getRandom(0, 1300);
+            targetY = getRandom(0, 864);
+        }
+
+        function move(){
+            bandi.style.left =parseFloat(bandi.style.left) + a*(targetX - parseFloat(bandi.style.left)) +"px"; 
+            bandi.style.top = parseFloat(bandi.style.top) + a*(targetY - parseFloat(bandi.style.top)) +"px";
+        }
+    </script>
+</head>
+<body>
+    
+    <div id="container"></div>
+    
+</body>
+</html>

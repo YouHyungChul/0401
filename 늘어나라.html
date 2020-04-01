@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        #container{
+            width: 100px;
+            height: 200px;
+            background: red;
+            position: relative;
+            top: 0px;
+            left: 0px;
+            margin: auto;
+        }
+    </style>
+    <script>
+        var targetY = 0;
+        var container;
+        var a = 0.5
+        window.addEventListener("load", function(){
+            mouseover();
+            mouseoff();
+            setInterval("move()", 100);
+        })
+        function mouseover(){
+            container = document.getElementById("container");
+            container.style.height=500 + "px";
+            targetY = parseFloat(this.height);
+        }
+
+        function mouseoff(){
+            container = document.getElementById("container");
+            container.style.height=200 + "px";
+            targetY = parseFloat(this.height);
+        }
+
+        function move(){
+            container.style.height = parseFloat(container.style.height)  + a*(targetY-  parseFloat(container.style.height)) + "px";
+        }
+    </script>
+</head>
+<body>
+    <div id="container" onmouseover="mouseover()" onmouseout="mouseoff()"></div>
+</body>
+</html>
